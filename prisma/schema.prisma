@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id String @id @default(cuid())
+  firstname String
+  lastname String
+  email String
+  password String
+  token String?
+  expired_at DateTime?
+  created_at DateTime @default(now())
+  updated_at DateTime?
+
+  participation QuizsParticipants[]
+
+  quizs Quizs[]
+}
+
+model QuizsParticipants {
+  id String @id @default(cuid())
+  user_id String 
+  quiz_id String 
+
+  quiz Quizs @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  responses ParticipantsResponses[]
+}
+
+model Quizs {
+  id String @id @default(cuid())
+  title String
+  description String
+  user_id String
+  created_at DateTime @default(now())
+  expired_at DateTime?
+
+  participants QuizsParticipants[]
+  questions QuizsQuestions[]
+
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model QuizsQuestions {
+  id String @id @default(cuid())
+  quiz_id  String
+  question_id String 
+
+  quiz Quizs @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
+  question Questions @relation(fields: [question_id], references: [id], onDelete: Cascade)
+
+}
+
+model Questions{
+  id String @id @default(cuid())
+  question String
+  quiz_id String @unique
+
+  quiz QuizsQuestions[]
+  options QuestionsOptions[]
+}
+
+model QuestionsOptions {
+  id String @id @default(cuid())
+  option String
+  question_id String
+  color String?
+  is_correct Boolean
+
+  question Questions @relation(fields: [question_id], references: [id], onDelete: Cascade)
+  participants ParticipantsResponses[]
+}
+
+model ParticipantsResponses {
+  question_option_id String @unique
+  participant_id String @unique
+
+  question_option QuestionsOptions @relation(fields: [question_option_id], references: [id])
+  participants QuizsParticipants @relation(fields: [participant_id], references: [id])
+}
+
+
+
+
+
