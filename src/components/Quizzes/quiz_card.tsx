@@ -10,7 +10,7 @@ type Props = {
 
 export const QuizCard = ({ quiz }: Props) => {
   return (
-    <Card>
+    <Card className="h-50 m-2 p-1.5">
       <CardTitle>{quiz.title}</CardTitle>
       <CardContent>{quiz.description}</CardContent>
       <CardFooter>{formatDate(quiz.created_at)}</CardFooter>

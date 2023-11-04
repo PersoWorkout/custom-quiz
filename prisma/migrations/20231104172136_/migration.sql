@@ -14,16 +14,16 @@ CREATE TABLE "Users" (
 );
 
 -- CreateTable
-CREATE TABLE "QuizsParticipants" (
+CREATE TABLE "QuizzesParticipants" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "quiz_id" TEXT NOT NULL,
 
-    CONSTRAINT "QuizsParticipants_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "QuizzesParticipants_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Quizs" (
+CREATE TABLE "Quizzes" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -31,16 +31,7 @@ CREATE TABLE "Quizs" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "expired_at" TIMESTAMP(3),
 
-    CONSTRAINT "Quizs_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "QuizsQuestions" (
-    "id" TEXT NOT NULL,
-    "quiz_id" TEXT NOT NULL,
-    "question_id" TEXT NOT NULL,
-
-    CONSTRAINT "QuizsQuestions_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Quizzes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -69,6 +60,12 @@ CREATE TABLE "ParticipantsResponses" (
     "participant_id" TEXT NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "_QuestionsToQuizzes" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Questions_quiz_id_key" ON "Questions"("quiz_id");
 
@@ -78,20 +75,20 @@ CREATE UNIQUE INDEX "ParticipantsResponses_question_option_id_key" ON "Participa
 -- CreateIndex
 CREATE UNIQUE INDEX "ParticipantsResponses_participant_id_key" ON "ParticipantsResponses"("participant_id");
 
--- AddForeignKey
-ALTER TABLE "QuizsParticipants" ADD CONSTRAINT "QuizsParticipants_quiz_id_fkey" FOREIGN KEY ("quiz_id") REFERENCES "Quizs"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "_QuestionsToQuizzes_AB_unique" ON "_QuestionsToQuizzes"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_QuestionsToQuizzes_B_index" ON "_QuestionsToQuizzes"("B");
 
 -- AddForeignKey
-ALTER TABLE "QuizsParticipants" ADD CONSTRAINT "QuizsParticipants_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "QuizzesParticipants" ADD CONSTRAINT "QuizzesParticipants_quiz_id_fkey" FOREIGN KEY ("quiz_id") REFERENCES "Quizzes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Quizs" ADD CONSTRAINT "Quizs_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "QuizzesParticipants" ADD CONSTRAINT "QuizzesParticipants_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "QuizsQuestions" ADD CONSTRAINT "QuizsQuestions_quiz_id_fkey" FOREIGN KEY ("quiz_id") REFERENCES "Quizs"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "QuizsQuestions" ADD CONSTRAINT "QuizsQuestions_question_id_fkey" FOREIGN KEY ("question_id") REFERENCES "Questions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Quizzes" ADD CONSTRAINT "Quizzes_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuestionsOptions" ADD CONSTRAINT "QuestionsOptions_question_id_fkey" FOREIGN KEY ("question_id") REFERENCES "Questions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -100,4 +97,10 @@ ALTER TABLE "QuestionsOptions" ADD CONSTRAINT "QuestionsOptions_question_id_fkey
 ALTER TABLE "ParticipantsResponses" ADD CONSTRAINT "ParticipantsResponses_question_option_id_fkey" FOREIGN KEY ("question_option_id") REFERENCES "QuestionsOptions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ParticipantsResponses" ADD CONSTRAINT "ParticipantsResponses_participant_id_fkey" FOREIGN KEY ("participant_id") REFERENCES "QuizsParticipants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ParticipantsResponses" ADD CONSTRAINT "ParticipantsResponses_participant_id_fkey" FOREIGN KEY ("participant_id") REFERENCES "QuizzesParticipants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_QuestionsToQuizzes" ADD CONSTRAINT "_QuestionsToQuizzes_A_fkey" FOREIGN KEY ("A") REFERENCES "Questions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_QuestionsToQuizzes" ADD CONSTRAINT "_QuestionsToQuizzes_B_fkey" FOREIGN KEY ("B") REFERENCES "Quizzes"("id") ON DELETE CASCADE ON UPDATE CASCADE;

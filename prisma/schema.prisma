@@ -21,22 +21,22 @@ model Users {
   created_at DateTime @default(now())
   updated_at DateTime?
 
-  participation QuizsParticipants[]
+  participation QuizzesParticipants[]
 
-  quizs Quizs[]
+  quizzes Quizzes[]
 }
 
-model QuizsParticipants {
+model QuizzesParticipants {
   id String @id @default(cuid())
   user_id String 
   quiz_id String 
 
-  quiz Quizs @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
+  quiz Quizzes @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
   user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
   responses ParticipantsResponses[]
 }
 
-model Quizs {
+model Quizzes {
   id String @id @default(cuid())
   title String
   description String
@@ -44,28 +44,18 @@ model Quizs {
   created_at DateTime @default(now())
   expired_at DateTime?
 
-  participants QuizsParticipants[]
-  questions QuizsQuestions[]
+  participants QuizzesParticipants[]
+  questions Questions[]
 
   user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
-}
-
-model QuizsQuestions {
-  id String @id @default(cuid())
-  quiz_id  String
-  question_id String 
-
-  quiz Quizs @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
-  question Questions @relation(fields: [question_id], references: [id], onDelete: Cascade)
-
 }
 
 model Questions{
   id String @id @default(cuid())
   question String
-  quiz_id String @unique
+  quiz_id String 
 
-  quiz QuizsQuestions[]
+  quiz Quizzes @relation(fields: [quiz_id], references: [id], onDelete:  Cascade)
   options QuestionsOptions[]
 }
 
@@ -85,7 +75,9 @@ model ParticipantsResponses {
   participant_id String @unique
 
   question_option QuestionsOptions @relation(fields: [question_option_id], references: [id])
-  participants QuizsParticipants @relation(fields: [participant_id], references: [id])
+  participants QuizzesParticipants @relation(fields: [participant_id], references: [id])
+
+  @@id([question_option_id, participant_id])
 }
 
 

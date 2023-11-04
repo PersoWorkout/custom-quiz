@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 export type QuizHome = Prisma.PromiseReturnType<typeof getAllQuizes>[number];
 
 export const getAllQuizes = async () =>
-  prisma.quizs.findMany({
+  prisma.quizzes.findMany({
     select: {
       id: true,
       title: true,
