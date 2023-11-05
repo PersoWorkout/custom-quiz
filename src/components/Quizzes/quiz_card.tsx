@@ -10,10 +10,17 @@ type Props = {
 
 export const QuizCard = ({ quiz }: Props) => {
   return (
-    <Card className="h-50 m-2 p-1.5">
-      <CardTitle>{quiz.title}</CardTitle>
-      <CardContent>{quiz.description}</CardContent>
-      <CardFooter>{formatDate(quiz.created_at)}</CardFooter>
+    <Card className="h-full">
+      <div className="m-2 p-1.5 h-[75%]">
+        <CardTitle>{quiz.title}</CardTitle>
+        <CardContent className="mt-4">{quiz.description}</CardContent>
+      </div>
+      <CardFooter className="flex justify-between">
+        <p className="col-span-1">
+          {quiz.user.firstname.toUpperCase()} {quiz.user.lastname}
+        </p>
+        <p className="">{formatDate(quiz.created_at)}</p>
+      </CardFooter>
     </Card>
   );
 };

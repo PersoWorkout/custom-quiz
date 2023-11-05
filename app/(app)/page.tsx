@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <div>
       <NavBar />
-      <div className="mt-28 grid grid-cols-3">
+      <div className="mt-28 grid md:grid-cols-3 sm:grid-cols-1 gap-4">
         {quizzes.map((quiz) => (
           <Link href={`/quizzes/${quiz.id}`} key={quiz.id}>
             <QuizCard quiz={quiz} />
