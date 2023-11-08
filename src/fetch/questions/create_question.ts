@@ -1,9 +1,15 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma, Questions } from "@prisma/client";
 
-export const createQuestion = (payload: Prisma.QuestionsUncheckedCreateInput) =>
-  prisma.questions.create({
+type params = {
+  question: string;
+  quiz_id: string;
+};
+
+export const createQuestion = async (payload: params) => {
+  return await prisma.questions.create({
     data: payload,
   });
+};

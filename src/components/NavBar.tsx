@@ -10,7 +10,7 @@ export const NavBar = () => {
         <Link href={"/"} className="my-auto text-xl">
           Quizzes
         </Link>
-        <Link href={"/"} className="my-auto text-xl">
+        <Link href={"/quizzes/add"} className="my-auto text-xl">
           Create
         </Link>
         <Link href={"/"} className="my-auto text-xl">

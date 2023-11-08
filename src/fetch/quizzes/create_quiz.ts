@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { Quizzes } from "@prisma/client";
 
 type params = {
   title: string;

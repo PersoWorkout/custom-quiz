@@ -36,7 +36,7 @@ export const CreateQuizForm = () => {
     console.log("submiting");
     await createQuiz({
       ...payload,
-      user_id: "clol8e4080000ma2w5gw6f6gk",
+      user_id: "clopunkge0000g6dkneszd6wu",
     })
       .then((quiz) => {
         console.log(quiz);

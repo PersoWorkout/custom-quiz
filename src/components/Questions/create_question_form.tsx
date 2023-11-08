@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,6 +12,7 @@ import { createQuestion } from "@/src/fetch/questions/create_question";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -32,15 +34,20 @@ export const CreateQuestionForm = ({ quizId }: Props) => {
   });
 
   const handleOnSubmit = (payload: z.infer<typeof formSchema>) => {
+    console.log(quizId);
     return createQuestion({ ...payload, quiz_id: quizId }).then((question) => {
-      console.log(question);
+      toast.success("question was created");
+      router.push(`/quizzes/${quizId}/question/${question.id}/options/add`);
     });
   };
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleOnSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(handleOnSubmit)}
+          className="m-4 p-4 space-y-5"
+        >
           <FormField
             control={form.control}
             name="question"
@@ -48,11 +55,16 @@ export const CreateQuestionForm = ({ quizId }: Props) => {
               <FormItem>
                 <FormLabel>Question</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    placeholder="What color is a strawberry 🍓 ?"
+                  />
                 </FormControl>
               </FormItem>
             )}
           />
+
+          <Button type="submit">Save</Button>
         </form>
       </Form>
     </>

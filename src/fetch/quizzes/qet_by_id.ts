@@ -6,5 +6,20 @@ export const getQuizById = (quizId: string) =>
     where: {
       id: quizId,
     },
-    select: defaultGet,
+    select: {
+      ...defaultGet,
+      questions: {
+        select: {
+          id: true,
+          question: true,
+          options: {
+            select: {
+              option: true,
+              color: true,
+              is_correct: true,
+            },
+          },
+        },
+      },
+    },
   });
