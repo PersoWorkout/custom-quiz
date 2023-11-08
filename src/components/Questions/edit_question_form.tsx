@@ -1,8 +1,9 @@
 "use client";
 
 import { QuestionForm } from "@/src/components/Questions/question_form";
-import { createQuestion } from "@/src/fetch/questions/create_question";
+import { editQuestion } from "@/src/fetch/questions/edit_question";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Questions } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -13,26 +14,27 @@ const formSchema = z.object({
 });
 
 type Props = {
-  quizId: string;
+  question: Questions;
 };
 
-export const CreateQuestionForm = ({ quizId }: Props) => {
+export const EditQuestionForm = ({ question }: Props) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      question: "",
+      question: question.question,
     },
   });
 
   const handleOnSubmit = (payload: z.infer<typeof formSchema>) => {
-    console.log(quizId);
-    return createQuestion({ ...payload, quiz_id: quizId }).then((question) => {
-      toast.success("question was created");
-      router.refresh();
-      router.push(`/quizzes/${quizId}/questions/${question.id}/options/add`);
-    });
+    return editQuestion({ ...payload, questionId: question.id }).then(
+      (data) => {
+        toast.success("question was updated");
+        router.refresh();
+        router.push(`/quizzes/${data.quiz_id}`);
+      }
+    );
   };
 
   return <QuestionForm form={form} handleOnSubmit={handleOnSubmit} />;

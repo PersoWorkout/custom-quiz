@@ -32,11 +32,10 @@ export const CreateQuizForm = () => {
     },
   });
 
-  const handleOnSubmit = async (payload: z.infer<typeof formSchema>) => {
-    console.log("submiting");
-    await createQuiz({
+  const handleOnSubmit = (payload: z.infer<typeof formSchema>) => {
+    createQuiz({
       ...payload,
-      user_id: "clopunkge0000g6dkneszd6wu",
+      user_id: "cloq4nywf0000mac86vigbo42",
     })
       .then((quiz) => {
         console.log(quiz);

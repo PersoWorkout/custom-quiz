@@ -8,8 +8,8 @@ const getQuestionsByQuiz = (quizId: string) =>
     },
   });
 
-const useGetQuesstionsByQuiz = (quizId: string) =>
-  useQuery({
-    queryKey: [`quiz/${quizId}/questions`],
-    queryFn: () => getQuestionsByQuiz(quizId),
-  });
+// const useGetQuesstionsByQuiz = (quizId: string) =>
+//   useQuery({
+//     queryKey: [`quiz/${quizId}/questions`],
+//     queryFn: () => getQuestionsByQuiz(quizId),
+//   });
