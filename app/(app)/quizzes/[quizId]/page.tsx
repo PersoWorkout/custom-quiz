@@ -16,7 +16,7 @@ export default async function Page({ params }: Props) {
         Welcome to <b>{quiz?.title}</b>
       </h1>
 
-      <div className="ml-5 space-y-9">
+      <div className="ml-5 space-y-9 max-w-3xl">
         <h2 className="text-lg">{quiz?.description}</h2>
         {quiz?.questions.map((question, index) => (
           <div className="flex w-full items-center justify-between" key={index}>

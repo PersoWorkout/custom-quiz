@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { createQuestionOption } from "@/src/fetch/options/create_options";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -20,6 +21,7 @@ import { z } from "zod";
 
 type Props = {
   questionId: string;
+  quizId: string;
 };
 
 const formSchema = z.object({
@@ -28,7 +30,7 @@ const formSchema = z.object({
   is_correct: z.boolean(),
 });
 
-export const CreateOptionForm = ({ questionId }: Props) => {
+export const CreateOptionForm = ({ questionId, quizId }: Props) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -96,6 +98,9 @@ export const CreateOptionForm = ({ questionId }: Props) => {
         />
 
         <Button type="submit">Save</Button>
+        <Button className="ml-2">
+          <Link href={`/quizzes/${quizId}`}>Finish</Link>
+        </Button>
       </form>
     </Form>
   );

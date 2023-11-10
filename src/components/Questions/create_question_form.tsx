@@ -27,7 +27,6 @@ export const CreateQuestionForm = ({ quizId }: Props) => {
   });
 
   const handleOnSubmit = (payload: z.infer<typeof formSchema>) => {
-    console.log(quizId);
     return createQuestion({ ...payload, quiz_id: quizId }).then((question) => {
       toast.success("question was created");
       router.refresh();

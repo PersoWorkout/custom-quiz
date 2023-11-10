@@ -33,17 +33,12 @@ export const CreateQuizForm = () => {
   });
 
   const handleOnSubmit = (payload: z.infer<typeof formSchema>) => {
-    createQuiz({
-      ...payload,
-      user_id: "cloq4nywf0000mac86vigbo42",
-    })
+    createQuiz(payload)
       .then((quiz) => {
-        console.log(quiz);
         toast.success("Quiz created");
         router.push(`/quizzes/${quiz.id}/questions/add`);
       })
       .catch((error) => {
-        console.log(error);
         toast.error("An error occured");
       });
   };

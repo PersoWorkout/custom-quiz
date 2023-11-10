@@ -6,8 +6,7 @@ export const defaultGet = {
   expired_at: true,
   user: {
     select: {
-      firstname: true,
-      lastname: true,
+      name: true,
       email: true,
     },
   },

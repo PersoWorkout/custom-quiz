@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import {
   PrismaClient,
-  Users,
+  User,
   Prisma,
   Quizzes,
   QuestionsOptions,
@@ -11,17 +11,15 @@ import {
 const prisma = new PrismaClient();
 
 const main = async () => {
-  const users: Array<Users> = [];
+  const users: Array<User> = [];
 
   for (let i = 0; i < 10; i++) {
     const user = {
-      firstname: faker.person.firstName(),
-      lastname: faker.person.lastName(),
+      name: faker.person.fullName(),
       email: faker.internet.email(),
-      password: faker.internet.password(),
-    } satisfies Prisma.UsersCreateInput;
+    } satisfies Prisma.UserCreateInput;
 
-    const createdUser = await prisma.users.create({
+    const createdUser = await prisma.user.create({
       data: user,
     });
 

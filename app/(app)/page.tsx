@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/lib/auth";
 import { NavBar } from "@/src/components/NavBar";
 import { QuizCard } from "@/src/components/Quizzes/quiz_card";
 import { getAllQuizes } from "@/src/fetch/quizzes/get_all";
@@ -5,6 +6,7 @@ import Link from "next/link";
 
 export default async function Home() {
   const quizzes = await getAllQuizes();
+  const session = await getAuthSession();
   return (
     <div>
       <NavBar />

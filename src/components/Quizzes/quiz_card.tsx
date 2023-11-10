@@ -16,9 +16,7 @@ export const QuizCard = ({ quiz }: Props) => {
         <CardContent className="mt-4">{quiz.description}</CardContent>
       </div>
       <CardFooter className="flex justify-between">
-        <p className="col-span-1">
-          {quiz.user.firstname.toUpperCase()} {quiz.user.lastname}
-        </p>
+        <p className="col-span-1">{quiz.user.name}</p>
         <p className="">{formatDate(quiz.created_at)}</p>
       </CardFooter>
     </Card>
