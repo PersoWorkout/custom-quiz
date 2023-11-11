@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -11,50 +10,53 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { createQuestionOption } from "@/src/fetch/options/create_options";
+import { editOption } from "@/src/fetch/options/edit_option";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import { QuestionsOptions } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
+const formSchema = z.object({
+  option: z.string().optional(),
+  is_correct: z.boolean().optional(),
+  color: z.string().optional(),
+});
+
 type Props = {
-  questionId: string;
+  option: QuestionsOptions;
   quizId: string;
 };
 
-const formSchema = z.object({
-  option: z.string(),
-  color: z.string(),
-  is_correct: z.boolean(),
-});
-
-export const CreateOptionForm = ({ questionId, quizId }: Props) => {
+export const EditOptionForm = ({ option, quizId }: Props) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      is_correct: false,
-      color: "168 85 247 / 0",
+      option: option.option,
+      is_correct: option.is_correct,
+      color: option.color || "",
     },
   });
 
-  const handleSubmitForm = (payload: z.infer<typeof formSchema>) => {
-    createQuestionOption({ ...payload, question_id: questionId }).then(
-      (data) => {
-        toast.success("option was added");
+  const handleOnSubmit = (payload: z.infer<typeof formSchema>) => {
+    editOption({ id: option.id, payload })
+      .then(() => {
+        toast.success("Option are updated");
         router.refresh();
         router.push(`/profile/quizzes/${quizId}`);
-      }
-    );
+      })
+      .catch((err) => {
+        toast.error("An error occured");
+      });
   };
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleSubmitForm)}
+        onSubmit={form.handleSubmit(handleOnSubmit)}
         className="m-4 p-4 space-y-5"
       >
         <FormField

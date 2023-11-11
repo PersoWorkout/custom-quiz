@@ -30,7 +30,7 @@ export const CreateQuestionForm = ({ quizId }: Props) => {
     return createQuestion({ ...payload, quiz_id: quizId }).then((question) => {
       toast.success("question was created");
       router.refresh();
-      router.push(`/quizzes/${quizId}/questions/${question.id}/options/add`);
+      router.push(`/profile/quizzes/${quizId}`);
     });
   };
 

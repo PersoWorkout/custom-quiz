@@ -9,9 +9,9 @@ export const Header = async () => {
   return (
     <header className="fixed top-0 flex justify-between bg-gradient-to-r from-purple-500 to-orange-500 h-20 w-full">
       <NavBar />
-      <div className="w-auto my-auto mr-10 flex items-center gap-2">
-        {!session ? <LoginButton /> : <UserProfileDropDown session={session} />}
+      <div className="w-auto my-auto mr-8 flex items-center gap-2">
         <ThemToogle />
+        {!session ? <LoginButton /> : <UserProfileDropDown session={session} />}
       </div>
     </header>
   );

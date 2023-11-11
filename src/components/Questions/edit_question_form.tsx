@@ -3,7 +3,7 @@
 import { QuestionForm } from "@/src/components/Questions/question_form";
 import { editQuestion } from "@/src/fetch/questions/edit_question";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Questions } from "@prisma/client";
+import { Prisma, Questions } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -23,7 +23,7 @@ export const EditQuestionForm = ({ question }: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      question: question.question,
+      question: question.question || "",
     },
   });
 

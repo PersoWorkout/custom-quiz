@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getQuizById } from "@/src/fetch/quizzes/qet_by_id";
+import { getQuizById } from "@/src/fetch/quizzes/get_by_id";
 import Link from "next/link";
 
 type Props = {

@@ -25,8 +25,14 @@ export const UserProfileDropDown = ({ session }: Props) => {
         <Button size={"lg"}>{session?.user.name ?? ""}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem asChild>
-          <Link href={"/profile"}>Profile</Link>
+        <DropdownMenuItem>
+          <Link href={"/profile"} className="inline-flex gap-2">
+            <User2 className="h-4 w-4" />
+            Profile
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href={`/profile/quizzes`}>My Quizzes</Link>
         </DropdownMenuItem>
         <LogoutDropDownMenuItem />
       </DropdownMenuContent>

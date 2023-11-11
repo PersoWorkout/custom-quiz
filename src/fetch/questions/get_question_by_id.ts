@@ -9,6 +9,7 @@ export const getQuestionById = async (id: string) => {
       id: true,
       question: true,
       quiz_id: true,
+      created_at: true,
     },
   });
 };

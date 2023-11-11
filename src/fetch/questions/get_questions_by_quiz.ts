@@ -1,15 +1,17 @@
 import { prisma } from "@/lib/prisma";
-import { useQuery } from "@tanstack/react-query";
+import { getQuestionWithOptionsType } from "@/src/fetch/types/getQuiz";
+import { Prisma } from "@prisma/client";
 
 const getQuestionsByQuiz = (quizId: string) =>
   prisma.questions.findMany({
     where: {
       quiz_id: quizId,
     },
+    select: {
+      ...getQuestionWithOptionsType,
+    },
   });
 
-// const useGetQuesstionsByQuiz = (quizId: string) =>
-//   useQuery({
-//     queryKey: [`quiz/${quizId}/questions`],
-//     queryFn: () => getQuestionsByQuiz(quizId),
-//   });
+export type questionWithOptionType = Prisma.PromiseReturnType<
+  typeof getQuestionsByQuiz
+>[number];
