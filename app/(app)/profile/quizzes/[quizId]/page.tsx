@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { OptionItem } from "@/src/components/Options/option_item";
 import { QuestionCard } from "@/src/components/Questions/question_card";
 import { getQuizById } from "@/src/fetch/quizzes/get_by_id";
 import Link from "next/link";
