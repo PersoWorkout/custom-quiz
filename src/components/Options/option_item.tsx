@@ -14,7 +14,7 @@ export const OptionItem = ({ quizId, option, mode }: Props) => {
   return (
     <div className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-4 w-full">
       {mode === "read" ? (
-        <Checkbox />
+        <Checkbox className={``} />
       ) : option.is_correct ? (
         <CheckCircle2 className="text-green-700" />
       ) : (

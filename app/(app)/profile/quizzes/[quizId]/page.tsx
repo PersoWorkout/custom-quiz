@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { OptionItem } from "@/src/components/Options/option_item";
 import { QuestionCard } from "@/src/components/Questions/question_card";
 import { getQuizById } from "@/src/fetch/quizzes/get_by_id";
-import { PenSquare, PlusCircle, PlusIcon } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
@@ -24,8 +23,8 @@ export default async function Page({ params }: Props) {
         </Link>
       </div>
 
-      <div className="ml-10 mt-10 space-y-9 min-w-10/12">
-        <h2 className="text-lg w-4/6">{quiz?.description}</h2>
+      <div className="ml-10 mt-10 space-y-9 max-w-screen-xl">
+        <h2 className="text-xl w-8/12">{quiz?.description}</h2>
         {quiz?.questions.map((question, index) => (
           <QuestionCard
             mode="edit"
@@ -34,7 +33,7 @@ export default async function Page({ params }: Props) {
             key={question.id}
           />
         ))}
-        <Button className="m-20">
+        <Button className="m-20" size={"lg"}>
           <Link href={`/profile/quizzes/${params.quizId}/questions/add`}>
             + Question
           </Link>

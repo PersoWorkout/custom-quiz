@@ -11,7 +11,7 @@ type Props = {
 
 export const QuestionCard = ({ question, index, mode }: Props) => {
   return (
-    <div className="flex w-full items-center justify-between">
+    <div className="flex w-full items-center">
       <div className="w-8/12">
         <div className="inline-flex justify-between w-full">
           <p>
@@ -38,7 +38,7 @@ export const QuestionCard = ({ question, index, mode }: Props) => {
         </div>
 
         {mode === "edit" && (
-          <Button size={"sm"} className="mx-6 my-2">
+          <Button size={"sm"} className="m-4">
             <Link
               href={`/profile/quizzes/${question.quiz_id}/questions/${question.id}/options/add`}
             >
