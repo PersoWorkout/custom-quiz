@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { getOptionType } from "../types/getQuiz";
+import { Prisma } from "@prisma/client";
 
 export const getOptionById = async (id: string) =>
   await prisma.questionsOptions.findFirstOrThrow({
@@ -21,3 +22,7 @@ export const getOptionById = async (id: string) =>
       },
     },
   });
+
+export type getOptionByIdType = NonNullable<
+  Prisma.PromiseReturnType<typeof getOptionById>
+>;

@@ -22,4 +22,6 @@ export const getQuizById = (quizId: string) =>
     },
   });
 
-export type questionType = Prisma.PromiseReturnType<typeof getQuizById>;
+export type quizType = NonNullable<
+  Prisma.PromiseReturnType<typeof getQuizById>
+>;

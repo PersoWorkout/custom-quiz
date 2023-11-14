@@ -1,4 +1,7 @@
+"use server";
+
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export const getQuestionById = async (id: string) => {
   return await prisma.questions.findUnique({
@@ -13,3 +16,7 @@ export const getQuestionById = async (id: string) => {
     },
   });
 };
+
+export type getQuestionByIdType = NonNullable<
+  Prisma.PromiseReturnType<typeof getQuestionById>
+>;

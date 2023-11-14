@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { createQuestionOption } from "@/src/fetch/options/create_options";
+import { getQuestionByIdType } from "@/src/fetch/questions/get_question_by_id";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,8 +21,7 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 
 type Props = {
-  questionId: string;
-  quizId: string;
+  question: getQuestionByIdType;
 };
 
 const formSchema = z.object({
@@ -30,7 +30,7 @@ const formSchema = z.object({
   is_correct: z.boolean(),
 });
 
-export const CreateOptionForm = ({ questionId, quizId }: Props) => {
+export const CreateOptionForm = ({ question }: Props) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,11 +42,11 @@ export const CreateOptionForm = ({ questionId, quizId }: Props) => {
   });
 
   const handleSubmitForm = (payload: z.infer<typeof formSchema>) => {
-    createQuestionOption({ ...payload, question_id: questionId }).then(
+    createQuestionOption({ ...payload, question_id: question.id }).then(
       (data) => {
         toast.success("option was added");
         router.refresh();
-        router.push(`/profile/quizzes/${quizId}`);
+        router.push(`/profile/quizzes/${question.quiz_id}`);
       }
     );
   };

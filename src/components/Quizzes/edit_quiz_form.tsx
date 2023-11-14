@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { editQuiz } from "@/src/fetch/quizzes/edit_quiz";
+import { quizType } from "@/src/fetch/quizzes/get_by_id";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Quizzes } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -19,7 +20,7 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 
 interface Props {
-  quiz: Quizzes;
+  quiz: quizType;
 }
 const quizFormSchema = z.object({
   title: z.string().optional(),
