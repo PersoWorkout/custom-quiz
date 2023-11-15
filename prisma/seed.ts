@@ -15,7 +15,8 @@ const main = async () => {
 
   for (let i = 0; i < 10; i++) {
     const user = {
-      name: faker.person.fullName(),
+      name: faker.person.lastName(),
+      firstname: faker.person.firstName(),
       email: faker.internet.email(),
     } satisfies Prisma.UserCreateInput;
 

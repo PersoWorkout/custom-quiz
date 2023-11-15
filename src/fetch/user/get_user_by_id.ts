@@ -13,6 +13,7 @@ export const getUserById = async (id: string) =>
       email: true,
       image: true,
       name: true,
+      firstname: true,
       _count: {
         select: {
           quizzes: true,
