@@ -17,6 +17,6 @@ export const getQuestionById = async (id: string) => {
   });
 };
 
-export type getQuestionByIdType = NonNullable<
+export type questionType = NonNullable<
   Prisma.PromiseReturnType<typeof getQuestionById>
 >;

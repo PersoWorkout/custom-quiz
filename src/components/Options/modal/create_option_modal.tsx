@@ -2,11 +2,11 @@
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { CreateOptionForm } from "@/src/components/Options/create_option_form";
-import { getQuestionByIdType } from "@/src/fetch/questions/get_question_by_id";
+import { questionType } from "@/src/fetch/questions/get_question_by_id";
 import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
-  question: getQuestionByIdType;
+  question: questionType;
 };
 
 export const CreateOptionModal = ({ question }: Props) => {

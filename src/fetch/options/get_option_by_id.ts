@@ -23,6 +23,6 @@ export const getOptionById = async (id: string) =>
     },
   });
 
-export type getOptionByIdType = NonNullable<
+export type getOption = NonNullable<
   Prisma.PromiseReturnType<typeof getOptionById>
 >;
